@@ -40,6 +40,7 @@ class Carnivore(Animal):
         if not isinstance(herbivore, Herbivore):
             return
         if herbivore.hidden:
+            # if hiding
             print(f"{self.name} cannot bite hidden {herbivore.name}")
 
         else:
