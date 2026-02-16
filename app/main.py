@@ -3,9 +3,13 @@ from __future__ import annotations
 
 class Animal:
 
-    alive = []
+    alive: list[Animal] = []
 
-    def __init__(self, name: str, health: int = 100) -> None:
+    def __init__(
+            self,
+            name: str,
+            health: int = 100
+    ) -> None:
         self.name = name
         self.hidden = False
         self.health = health
@@ -16,6 +20,11 @@ class Animal:
         return (f"{{Name: {self.name}, "
                 f"Health: {self.health}, "
                 f"Hidden: {self.hidden}}}")
+
+    def change_health(self, points: int) -> None:
+        self.health += points
+        if self.health <= 0 and self in Animal.alive:
+            Animal.alive.remove(self)
 
 
 class Herbivore(Animal):
@@ -34,7 +43,4 @@ class Carnivore(Animal):
             print(f"{self.name} cannot bite hidden {herbivore.name}")
 
         else:
-            herbivore.health -= 50
-
-        if herbivore.health <= 0 and herbivore in Animal.alive:
-            Animal.alive.remove(herbivore)
+            herbivore.change_health(-50)
